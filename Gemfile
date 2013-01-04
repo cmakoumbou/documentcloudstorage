@@ -1,13 +1,17 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
+gem 'pg', '0.12.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-group :development do
-	gem 'sqlite3', '1.3.5'
+group :development, :test do
 	gem 'rspec-rails', '2.10.0'
+end
+
+group :development do
+	gem 'annotate', '2.5.0'
 end
 
 # Gems used only for assets and not required
@@ -20,16 +24,15 @@ end
 
 gem 'jquery-rails'
 
+# Gem used to validate the format of an email
+gem 'validates_email_format_of', :git => 'git://github.com/alexdunae/validates_email_format_of.git'
+
 group :test do
 	gem 'capybara', '1.1.2'
 end
 
-group :production do
-	gem 'pg', '0.12.2'
-end
-
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '3.0.1'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
