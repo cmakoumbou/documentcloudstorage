@@ -29,6 +29,7 @@ gem 'validates_email_format_of', :git => 'git://github.com/alexdunae/validates_e
 
 group :test do
 	gem 'capybara', '1.1.2'
+	gem 'factory_girl_rails', '4.1.0'
 end
 
 # To use ActiveModel has_secure_password
