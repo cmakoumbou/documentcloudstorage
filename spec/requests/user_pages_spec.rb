@@ -65,6 +65,8 @@ describe "User pages" do
   			it { should have_selector('title', text: user.first_name) }
   			it { should have_selector('title', text: user.last_name) }
   			it { should have_selector('p', text: 'Welcome') }
+
+        it { should have_link('Sign out') }
   		end
   	end
   end
