@@ -4,6 +4,7 @@ gem 'rails', '3.2.10'
 gem 'pg', '0.12.2'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
+gem 'paperclip', '3.4.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

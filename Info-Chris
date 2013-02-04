@@ -1,3 +1,34 @@
-Database
+Hard Lock
 
-Find by Name (first and last)
+User uploads either a Word, Excel or PowerPoint document (version 1) -> Download & Edit -> Lock -> 
+Upload new version (Date + Owner + version number [1.1 until 1.9 then 2.0] + commit message)/Unlock -> Unlock ->
+Offline (Very Important) 
+
+Documents need to be worked on offline
+
+One-Click commits
+
+Upload and versioned in one click. 
+
+References /Citation (Save your references) 
+
+Save references/citations outside of the document 
+
+Branch 
+
+Managing the structure of a document (example a book)
+
+Granular view of changes
+
+Comment on the changes
+
+Feedback
+
+Notifications 
+
+When changes are made ( file, folder , comment) 
+Allow to turn off notifications on certain aspect.
+
+Resources
+
+Allow many collaborators, many private repositories but have limits on users per repository and repository size.
