@@ -10,4 +10,8 @@ FactoryGirl.define do
     	admin true
     end
   end
+
+  factory :document do
+    user
+  end
 end

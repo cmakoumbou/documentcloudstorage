@@ -16,6 +16,8 @@
 class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
 
+  has_many :documents, dependent: :destroy
+
   before_save { self.email.downcase! }
   before_save :create_remember_token
 

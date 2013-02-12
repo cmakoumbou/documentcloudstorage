@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130108144321) do
+ActiveRecord::Schema.define(:version => 20130211230547) do
+
+  create_table "documents", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "uploaded_file_file_name"
+    t.string   "uploaded_file_content_type"
+    t.integer  "uploaded_file_file_size"
+    t.datetime "uploaded_file_updated_at"
+  end
+
+  add_index "documents", ["user_id"], :name => "index_documents_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name"

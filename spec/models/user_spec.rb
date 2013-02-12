@@ -20,6 +20,9 @@ describe User do
   before do
     @user = User.new(first_name: "Example", last_name: "User", email: "user@example.com", 
                     password: "foobar", password_confirmation: "foobar")
+    @alpha = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'doctor.txt'))
+    @beta = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'hello.txt'))
+    @delta = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'moon.txt'))
   end
 
   subject { @user }
@@ -34,6 +37,8 @@ describe User do
 
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
+
+  it { should respond_to(:documents) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -159,6 +164,32 @@ describe User do
 
       it { should_not == user_for_invalid_password }
       specify { user_for_invalid_password.should be_false }
+    end
+  end
+
+  describe "document associations" do
+    before { @user.save }
+    let!(:alpha_document) do
+      FactoryGirl.create(:document, user: @user, uploaded_file: @alpha, created_at: 1.day.ago)
+    end
+    let!(:delta_document) do
+      FactoryGirl.create(:document, user: @user, uploaded_file: @delta, created_at: 6.hours.ago)
+    end
+    let!(:beta_document) do
+      FactoryGirl.create(:document, user: @user, uploaded_file: @beta, created_at: 2.minutes.ago)
+    end
+
+    it "should have the right documents in the right alphabetical order" do
+      @user.documents.should == [alpha_document, beta_document, delta_document]
+    end
+
+    it "should destroy associated documents" do
+      documents = @user.documents.dup
+      @user.destroy
+      documents.should_not be_empty
+      documents.each do |document|
+        Document.find_by_id(document.id).should be_nil
+      end
     end
   end
 end
