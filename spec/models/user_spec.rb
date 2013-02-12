@@ -20,9 +20,10 @@ describe User do
   before do
     @user = User.new(first_name: "Example", last_name: "User", email: "user@example.com", 
                     password: "foobar", password_confirmation: "foobar")
-    @alpha = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'doctor.txt'))
-    @beta = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'hello.txt'))
-    @delta = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'moon.txt'))
+
+    @alpha = File.new(File.join(Rails.root, 'spec', 'support', 'doctor.txt'))
+    @beta = File.new(File.join(Rails.root, 'spec', 'support', 'hello.txt'))
+    @delta = File.new(File.join(Rails.root, 'spec', 'support', 'moon.txt'))
   end
 
   subject { @user }

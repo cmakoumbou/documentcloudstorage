@@ -33,4 +33,11 @@ RSpec.configure do |config|
 
   #Paperclip
   config.include Paperclip::Shoulda::Matchers
+
+  #Delete uploaded files after running tests
+  config.after(:all) do
+    if Rails.env.test? 
+      FileUtils.rm_rf(Dir["#{Rails.root}/public/system/documents/uploaded_files/[^.]*"])
+    end 
+  end 
 end
