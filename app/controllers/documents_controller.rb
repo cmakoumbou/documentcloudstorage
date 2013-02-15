@@ -9,6 +9,7 @@ class DocumentsController < ApplicationController
   def create
   	@document = current_user.documents.build(params[:document])
   	if @document.save
+      flash[:sucess] = "Document uploaded"
   		redirect_to @document
   	else
   		render 'new'

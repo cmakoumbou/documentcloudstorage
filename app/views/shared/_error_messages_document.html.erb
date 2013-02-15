@@ -1,0 +1,8 @@
+<% if @document.errors.any? %>
+  <p>The form contains <%= pluralize(@document.errors.count, "error") %>.</p>
+  <ul>
+  <% @document.errors.full_messages.each do |msg| %>
+    <li>* <%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>

@@ -25,6 +25,11 @@ describe "Document pages" do
     	it "should not upload a document" do
     		expect { click_button submit }.not_to change(Document, :count)
     	end
+
+      describe "it should show an error message" do
+        before { click_button submit }
+        it { should have_content('error') }
+      end
     end
 
     describe "with file attached" do
@@ -36,6 +41,11 @@ describe "Document pages" do
     	it "should upload a document" do
     		expect { click_button submit }.to change(Document, :count).by(1)
     	end
+
+      describe "it should show a success message" do
+        before { click_button submit }
+        it { should have_content('Document uploaded') }
+      end
     end
   end
 
