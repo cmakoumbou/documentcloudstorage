@@ -1,6 +1,5 @@
 Tms::Application.routes.draw do
-  get "documents/new"
-
+  
   resources :users
   resources :documents
   resources :sessions, only: [:new, :create, :destroy]

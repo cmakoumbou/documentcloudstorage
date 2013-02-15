@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe "Authentication" do
 
+  before do
+    @alpha = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'doctor.txt'))
+  end
+
   subject { page }
 
   describe "signin page" do
@@ -68,6 +72,7 @@ describe "Authentication" do
 
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
+      let!(:document) { FactoryGirl.create(:document, user: user, uploaded_file: @alpha) }
 
       describe "when attempting to visit a protected page" do
         before do
@@ -116,11 +121,35 @@ describe "Authentication" do
           it { should have_selector('title', text: 'Sign in') }
         end
       end
+
+      describe "in the Documents controller" do
+
+        describe "when attempting to access the new action" do
+          before { get new_document_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "submitting to the create action" do
+          before { post documents_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "when attempting to access the show action" do
+          before { get document_path(document) }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "visiting the document index" do
+          before { visit documents_path }
+          it { should have_selector('title', text: 'Sign in') }
+        end
+      end
     end
 
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
+      let!(:wrong_document) { FactoryGirl.create(:document, user: wrong_user, uploaded_file: @alpha) }
       before { sign_in user }
 
       describe "visiting Users#edit page" do
@@ -130,6 +159,11 @@ describe "Authentication" do
 
       describe "submitting a PUT request to the Users#update action" do
         before { put user_path(wrong_user) }
+        specify { response.should redirect_to(root_path) }
+      end
+
+      describe "submitting a GET request to the Documents#show action" do
+        before { get document_path(wrong_document) }
         specify { response.should redirect_to(root_path) }
       end
     end
