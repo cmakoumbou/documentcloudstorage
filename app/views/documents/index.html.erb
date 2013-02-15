@@ -1,2 +1,7 @@
-<% provide(:title, 'Document index') %>
-<h1>Document index</h1>
+<% provide(:title, 'All documents') %>
+<h1>All documents</h1>
+<% for document in @documents %>
+	<li>
+		<%= link_to document.uploaded_file_file_name, document %>
+	</li>
+<% end %>

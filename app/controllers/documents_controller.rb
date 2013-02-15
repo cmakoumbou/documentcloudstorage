@@ -20,6 +20,7 @@ class DocumentsController < ApplicationController
   end
 
   def index
+    @documents = current_user.documents
   end
 
   private

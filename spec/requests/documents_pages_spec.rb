@@ -4,6 +4,8 @@ describe "Document pages" do
 
   before do
     @alpha = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'doctor.txt'))
+    @beta = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'hello.txt'))
+    @delta = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'moon.txt'))
   end
 
   subject { page }
@@ -51,5 +53,20 @@ describe "Document pages" do
   end
 
   describe "index document page" do
+    before do
+      FactoryGirl.create(:document, user: user, uploaded_file: @alpha) 
+      FactoryGirl.create(:document, user: user, uploaded_file: @beta) 
+      FactoryGirl.create(:document, user: user, uploaded_file: @delta) 
+      visit documents_path
+    end
+
+    it { should have_selector('title', text: 'All documents') }
+    it { should have_selector('h1', text: 'All documents') }
+
+    it "should list the user's document" do
+      user.documents.all.each do |document|
+        page.should have_selector('li', text: document.uploaded_file_file_name)
+      end
+    end
   end
 end
