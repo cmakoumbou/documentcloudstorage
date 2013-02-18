@@ -1,6 +1,6 @@
 class DocumentsController < ApplicationController
   before_filter :signed_in_user, only: [:new, :create, :show, :index]
-  before_filter :correct_user, only: [:show]
+  before_filter :correct_user, only: [:show, :destroy]
 
   def new
   	@document = current_user.documents.build
@@ -22,6 +22,11 @@ class DocumentsController < ApplicationController
 
   def index
     @documents = current_user.documents
+  end
+
+  def destroy
+    @document.destroy
+    redirect_to(root_path)
   end
 
   private

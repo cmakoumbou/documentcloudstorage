@@ -79,4 +79,16 @@ describe "Document pages" do
       end
     end
   end
+
+  describe "delete document" do
+    before { FactoryGirl.create(:document, user: user, uploaded_file: @beta) }
+
+    describe "as correct user" do
+      before { visit documents_path }
+
+      it "should delete a document" do
+        expect { click_link "delete" }.to change(Document, :count).by(-1)
+      end
+    end
+  end
 end
