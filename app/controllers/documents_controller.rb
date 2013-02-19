@@ -1,6 +1,6 @@
 class DocumentsController < ApplicationController
-  before_filter :signed_in_user, only: [:new, :create, :show, :index]
-  before_filter :correct_user, only: [:show, :destroy]
+  before_filter :signed_in_user, only: [:new, :create, :show, :index, :destroy, :get]
+  before_filter :correct_user, only: [:show, :destroy, :get]
 
   def new
   	@document = current_user.documents.build
@@ -31,12 +31,7 @@ class DocumentsController < ApplicationController
   end
 
   def get
-    document = current_user.documents.find_by_id(params[:id])
-    if document
-      send_file document.uploaded_file.path, :type => document.uploaded_file_content_type
-    else
-      redirect_to :action => 'index'
-    end
+    send_file @document.uploaded_file.path, :type => @document.uploaded_file_content_type
   end
 
   private
@@ -50,6 +45,6 @@ class DocumentsController < ApplicationController
 
     def correct_user
       @document = current_user.documents.find_by_id(params[:id])
-      redirect_to(root_path) if @document.nil?
+      redirect_to :action => 'index' if @document.nil?
     end
 end

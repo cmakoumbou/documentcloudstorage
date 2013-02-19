@@ -143,6 +143,16 @@ describe "Authentication" do
           before { visit documents_path }
           it { should have_selector('title', text: 'Sign in') }
         end
+
+        describe "submitting to the destroy action" do
+          before { delete document_path(document) }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "submitting to the get action" do
+          before { get download_path(document) }
+          specify { response.should redirect_to(signin_path) }
+        end
       end
     end
 
@@ -164,7 +174,17 @@ describe "Authentication" do
 
       describe "submitting a GET request to the Documents#show action" do
         before { get document_path(wrong_document) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(documents_path) }
+      end
+
+      describe "submitting a DELETE request to the Documents#destroy action" do
+        before { delete document_path(wrong_document) }
+        specify { response.should redirect_to(documents_path) }
+      end
+
+      describe "submitting a GET request to the Documents#get action" do
+        before { delete document_path(wrong_document) }
+        specify { response.should redirect_to(documents_path) }
       end
     end
 

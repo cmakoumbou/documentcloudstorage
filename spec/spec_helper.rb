@@ -37,7 +37,7 @@ RSpec.configure do |config|
   #Delete uploaded files after running tests
   config.after(:all) do
     if Rails.env.test? 
-      FileUtils.rm_rf(Dir["#{Rails.root}/upload_test/[^.]*"])
+      FileUtils.rm_rf(Dir["#{Rails.root}/upload_test/test/[^.]*"])
     end 
   end
 end
