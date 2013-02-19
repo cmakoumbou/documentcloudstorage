@@ -14,6 +14,8 @@ Tms::Application.routes.draw do
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact' 
 
+  match 'documents/get/:id', to: 'documents#get', :as => 'download'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -17,6 +17,9 @@
 # Ignore the database file
 config/database.yml
 
+# Ignore file uploads
+/private
+
 # Ignore other unneeded files.
 doc/
 *.swp

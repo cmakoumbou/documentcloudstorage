@@ -58,7 +58,7 @@ describe "Document pages" do
     it { should have_selector('title', text: full_title('Show document')) }
 
     describe "documents" do
-      it { should have_content(document.uploaded_file_file_name) }
+      it { should have_content(document.file_name) }
     end
   end
 
@@ -75,7 +75,7 @@ describe "Document pages" do
 
     it "should list the user's document" do
       user.documents.all.each do |document|
-        page.should have_selector('li', text: document.uploaded_file_file_name)
+        page.should have_selector('li', text: document.file_name)
       end
     end
   end
@@ -88,6 +88,19 @@ describe "Document pages" do
 
       it "should delete a document" do
         expect { click_link "delete" }.to change(Document, :count).by(-1)
+      end
+    end
+  end
+
+  describe "download document" do
+    before { FactoryGirl.create(:document, user: user, uploaded_file: @beta) }
+
+    describe "as correct user" do
+      before { visit documents_path }
+
+      it "should download a document" do
+        click_link "download"
+        page.should have_content('This is a test file.')
       end
     end
   end

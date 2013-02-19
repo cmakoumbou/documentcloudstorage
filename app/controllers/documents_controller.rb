@@ -26,7 +26,17 @@ class DocumentsController < ApplicationController
 
   def destroy
     @document.destroy
-    redirect_to(root_path)
+    flash[:success] = "Document deleted"
+    redirect_to :action => 'index'
+  end
+
+  def get
+    document = current_user.documents.find_by_id(params[:id])
+    if document
+      send_file document.uploaded_file.path, :type => document.uploaded_file_content_type
+    else
+      redirect_to :action => 'index'
+    end
   end
 
   private
