@@ -34,4 +34,10 @@ Tms::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Paperclip settings
+  config.paperclip_defaults = { 
+            :url => "/documents/get/:id",
+            :path => ":rails_root/upload_test/#{Rails.env}/:class/:attachment/:id_partition/:style/:filename"
+  }
 end

@@ -40,4 +40,10 @@ Tms::Application.configure do
   silence_warnings do
     BCrypt::Engine::DEFAULT_COST = BCrypt::Engine::MIN_COST
   end
+
+  # Paperclip settings
+  config.paperclip_defaults = { 
+            :url => "/documents/get/:id",
+            :path => ":rails_root/upload_test/#{Rails.env}/:class/:attachment/:id_partition/:style/:filename"
+  }
 end

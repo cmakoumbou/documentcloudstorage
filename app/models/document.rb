@@ -16,10 +16,7 @@ class Document < ActiveRecord::Base
   attr_accessible :uploaded_file
   belongs_to :user
 
-  has_attached_file :uploaded_file, { 
-            :url => "/documents/get/:id",
-            :path => ":rails_root/private/:class/:attachment/:id_partition/:style/:filename"
-  }
+  has_attached_file :uploaded_file
 
   validates :user_id, presence: true
   validates_attachment_size :uploaded_file, :less_than => 10.megabytes
