@@ -36,3 +36,5 @@ Allow many collaborators, many private repositories but have limits on users per
 Use Send_data to generate files (eg: A file containing the latest changes made to a file, or in a folder)
 
 One line description for COMMITS and unlimited(max_char) for full description
+
+Use X-sendfile instead of Send_file method

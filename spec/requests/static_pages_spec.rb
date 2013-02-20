@@ -2,6 +2,12 @@ require 'spec_helper'
 
 describe "Static pages" do
 
+  before do
+    @alpha = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'doctor.txt'))
+    @beta = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'hello.txt'))
+    @delta = Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'moon.txt'))
+  end
+
   subject { page }
 
   shared_examples_for "all static pages" do
@@ -9,13 +15,30 @@ describe "Static pages" do
     it { should have_selector('title',  text: full_title(page_title)) }
   end
 
-  describe "Home page" do
+  describe "Home page for non-signed-in users" do
     before { visit root_path }
     let(:heading) {'Sample App'}
     let(:page_title) {''}
 
     it_should_behave_like "all static pages"
     it { should_not have_selector 'title', text: '| Home'}
+  end
+
+  describe "Home page for signed-in users" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      sign_in user
+      FactoryGirl.create(:document, user: user, uploaded_file: @alpha) 
+      FactoryGirl.create(:document, user: user, uploaded_file: @beta) 
+      FactoryGirl.create(:document, user: user, uploaded_file: @delta) 
+      visit root_path
+    end
+
+    it "should list the user's document" do
+      user.documents.all.each do |document|
+        page.should have_selector('li', text: document.file_name)
+      end
+    end
   end
 
   describe "Help page" do
