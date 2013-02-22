@@ -40,6 +40,7 @@ describe User do
   it { should respond_to(:authenticate) }
 
   it { should respond_to(:documents) }
+  it { should respond_to(:folders) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -190,6 +191,32 @@ describe User do
       documents.should_not be_empty
       documents.each do |document|
         Document.find_by_id(document.id).should be_nil
+      end
+    end
+  end
+
+  describe "folder associations" do
+    before { @user.save }
+    let!(:alpha_folder) do
+      FactoryGirl.create(:folder, name: 'alpha', user: @user, created_at: 1.day.ago)
+    end
+    let!(:delta_folder) do
+      FactoryGirl.create(:folder, name: 'delta', user: @user, created_at: 6.hours.ago)
+    end
+    let!(:beta_folder) do
+      FactoryGirl.create(:folder, name: 'beta', user: @user, created_at: 2.minutes.ago)
+    end
+
+    it "should have the right folders in the right alphabetical order" do
+      @user.folders.should == [alpha_folder, beta_folder, delta_folder]
+    end
+
+    it "should destroy associated folders" do
+      folders = @user.folders.dup
+      @user.destroy
+      folders.should_not be_empty
+      folders.each do |folder|
+        Folder.find_by_id(folder.id).should be_nil
       end
     end
   end

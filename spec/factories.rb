@@ -14,4 +14,9 @@ FactoryGirl.define do
   factory :document do
     user
   end
+
+  factory :folder do
+    name "Lorem ipsum"
+    user
+  end
 end

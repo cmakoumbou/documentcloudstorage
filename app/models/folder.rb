@@ -16,4 +16,9 @@ class Folder < ActiveRecord::Base
   belongs_to :user
 
   has_ancestry
+
+  validates :user_id, presence: true
+  validates :name, presence: true, length: { maximum: 255 }
+
+  default_scope order: 'folders.name ASC'
 end
