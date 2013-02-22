@@ -1,10 +1,11 @@
 Tms::Application.routes.draw do
   
-  resources :users
-  resources :documents
-  resources :sessions, only: [:new, :create, :destroy]
-
   root to: 'static_pages#home'
+
+  resources :users
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :documents
+  resources :folders, only: [:new]
 
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'

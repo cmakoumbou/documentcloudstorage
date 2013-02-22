@@ -5,7 +5,8 @@ gem 'pg', '0.12.2'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'paperclip', '3.4.0'
-gem "json", "1.7.7"
+gem 'json', '1.7.7'
+gem 'ancestry', '1.3.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
