@@ -4,10 +4,10 @@
 	<li>
 		<%= link_to document.file_name, document %>
 		<% if current_user?(document.user) %>
-			<%= link_to "delete", document, method: :delete,
-											data: { confirm: "You sure?"},
-											title: document.file_name %>
-			<%= link_to "download", download_path(document) %>
+			|	<%= link_to "delete", document, method: :delete,
+												data: { confirm: "You sure?"},
+												title: document.file_name %>
+			|	<%= link_to "download", download_path(document) %>
 		<% end %>
 	</li>
 <% end %>

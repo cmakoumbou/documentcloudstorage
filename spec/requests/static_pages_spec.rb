@@ -30,13 +30,22 @@ describe "Static pages" do
       sign_in user
       FactoryGirl.create(:document, user: user, uploaded_file: @alpha) 
       FactoryGirl.create(:document, user: user, uploaded_file: @beta) 
-      FactoryGirl.create(:document, user: user, uploaded_file: @delta) 
+      FactoryGirl.create(:document, user: user, uploaded_file: @delta)
+      FactoryGirl.create(:folder, user: user, name: "Project A")
+      FactoryGirl.create(:folder, user: user, name: "Project B")
+      FactoryGirl.create(:folder, user: user, name: "Project C")
       visit root_path
     end
 
     it "should list the user's document" do
       user.documents.all.each do |document|
         page.should have_selector('li', text: document.file_name)
+      end
+    end
+
+    it "should list the user's folder" do
+      user.folders.all.each do |folder|
+        page.should have_selector('li', text: folder.name)
       end
     end
   end
