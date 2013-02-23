@@ -1,2 +1,10 @@
 <% provide(:title, 'New folder') %>
 <h1>New folder</h1>
+<%= form_for(@folder) do |f| %>
+
+	<%= render 'shared/error_messages', object: f.object %>
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+
+	<%= f.submit "Create folder" %>
+<% end %>

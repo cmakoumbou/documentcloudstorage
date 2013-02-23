@@ -1,0 +1,12 @@
+<% provide(:title, 'All folders') %>
+<h1>All folders</h1>
+<% for folder in @folders %>
+	<li>
+		<%= folder.name %>
+		<% if current_user?(folder.user) %>
+			|	<%= link_to "delete", folder, method: :delete,
+										  data: { confirm: "You sure?"},
+										  title: folder.name %>
+		<% end %>
+	</li>
+<% end %>

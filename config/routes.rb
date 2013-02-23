@@ -5,7 +5,7 @@ Tms::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :documents
-  resources :folders, only: [:new]
+  resources :folders
 
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'

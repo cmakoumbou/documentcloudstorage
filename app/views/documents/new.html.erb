@@ -2,7 +2,7 @@
 <h1>Upload</h1>
 <%= form_for @document, :html => { :multipart => true } do |f| %>
 
-	<%= render 'shared/error_messages_document' %>
+	<%= render 'shared/error_messages', object: f.object %>
 	
 	<%= f.label :uploaded_file %>
 	<%= f.file_field :uploaded_file %>
