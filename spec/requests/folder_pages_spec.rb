@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "FolderPages" do
+describe "Folder pages" do
 
 	subject { page }
 

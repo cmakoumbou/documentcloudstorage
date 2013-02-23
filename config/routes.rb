@@ -1,6 +1,6 @@
 Tms::Application.routes.draw do
-  
-  root to: 'static_pages#home'
+
+  root to: 'home#index'
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
