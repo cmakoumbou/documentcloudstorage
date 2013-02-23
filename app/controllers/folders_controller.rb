@@ -1,6 +1,7 @@
 class FoldersController < ApplicationController
-	before_filter :signed_in_user, only: [:new, :show, :create, :destroy]
-	before_filter :correct_user, only: [:destroy]
+	before_filter :signed_in_user, only: [:new, :create, :index, :show, :edit, :update, :destroy]
+	before_filter :correct_user, only: [:show, :edit, :update, :destroy]
+	# Correct user for edit, show, and etc
 	
 	def new
 		@folder = current_user.folders.build
@@ -22,6 +23,20 @@ class FoldersController < ApplicationController
 
 	def show
 		@folder = current_user.folders.find(params[:id])
+	end
+
+	def edit
+		@folder = current_user.folders.find(params[:id])
+	end
+
+	def update
+		@folder = current_user.folders.find(params[:id])
+		if @folder.update_attributes(params[:folder])
+			flash[:success] = "Folder updated"
+			redirect_to @folder
+		else
+			render 'edit'
+		end
 	end
 
 	def destroy

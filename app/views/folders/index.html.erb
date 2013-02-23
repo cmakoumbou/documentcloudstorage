@@ -7,6 +7,7 @@
 			|	<%= link_to "delete", folder, method: :delete,
 										  data: { confirm: "You sure?"},
 										  title: folder.name %>
+		    |   <%= link_to "edit", edit_folder_path(folder) %>
 		<% end %>
 	</li>
 <% end %>

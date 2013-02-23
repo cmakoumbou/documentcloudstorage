@@ -69,7 +69,8 @@ describe "Authentication" do
 
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
-      let!(:document) { FactoryGirl.create(:document, user: user, uploaded_file: @alpha) }
+      let(:document) { FactoryGirl.create(:document, user: user, uploaded_file: @alpha) }
+      let(:folder) { FactoryGirl.create(:folder, user: user, name: "Project A") }
 
       describe "when attempting to visit a protected page" do
         before do
@@ -154,13 +155,38 @@ describe "Authentication" do
 
       describe "in the Folders controller" do
 
+        describe "when attempting to access the new action" do
+          before { get new_folder_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+
         describe "submitting to the create action" do
           before { post folders_path }
           specify { response.should redirect_to(signin_path) }
         end
 
+        describe "when attempting to access the show action" do
+          before { get folder_path(folder) }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "visiting the folder index" do
+          before { visit folders_path }
+          it { should have_selector('title', text: 'Sign in') }
+        end
+
         describe "submitting to the destroy action" do
           before { delete folder_path(FactoryGirl.create(:folder)) }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "visiting the edit page" do
+          before { visit edit_folder_path(folder) }
+          it { should have_selector('title', text: 'Sign in') }
+        end
+
+        describe "submitting to the update action" do
+          before { put folder_path(folder) }
           specify { response.should redirect_to(signin_path) }
         end
       end
@@ -170,6 +196,7 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
       let!(:wrong_document) { FactoryGirl.create(:document, user: wrong_user, uploaded_file: @alpha) }
+      let!(:wrong_folder) { FactoryGirl.create(:folder, user: wrong_user, name: "Project Wrong") }
       before { sign_in user }
 
       describe "visiting Users#edit page" do
@@ -195,6 +222,26 @@ describe "Authentication" do
       describe "submitting a GET request to the Documents#get action" do
         before { delete document_path(wrong_document) }
         specify { response.should redirect_to(documents_path) }
+      end
+
+      describe "visiting Folders#edit page" do
+        before { visit edit_folder_path(wrong_folder) }
+        it { should_not have_selector('title', text: full_title('Edit folder')) }
+      end
+
+      describe "submitting a PUT request to the Folders#update action" do
+        before { put folder_path(wrong_folder) }
+        specify { response.should redirect_to(folders_path) }
+      end
+
+      describe "submitting a GET request to the Folders#show action" do
+        before { get folder_path(wrong_folder) }
+        specify { response.should redirect_to(folders_path) }
+      end
+
+      describe "submitting a DELETE request to the Folders#destroy action" do
+        before { delete folder_path(wrong_folder) }
+        specify { response.should redirect_to(folders_path) }
       end
     end
 

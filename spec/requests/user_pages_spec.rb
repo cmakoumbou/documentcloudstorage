@@ -137,7 +137,7 @@ describe "User pages" do
 
     describe "with valid information" do
       let(:new_first_name)  { "New" }
-      let(:new_last_name)   {"Name"}
+      let(:new_last_name)   { "Name" }
       let(:new_email)       { "new@example.com" }
       before do
         fill_in "First name",       with: new_first_name

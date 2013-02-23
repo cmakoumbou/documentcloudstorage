@@ -79,4 +79,35 @@ describe "FolderPages" do
 			end
 		end
 	end
+
+	describe "edit" do
+		let!(:folder) { FactoryGirl.create(:folder, user: user, name: "Project A") }
+		before { visit edit_folder_path(folder) }
+
+		describe "page" do
+			it { should have_selector('h1', text: "Update your folder") }
+			it { should have_selector('title', text: "Edit folder") }
+		end
+
+		describe "with invalid information" do
+			let(:bad_name) { "a" * 256 }
+			before do 
+				fill_in "Name", with: bad_name
+				click_button "Save changes"
+			end
+
+			it { should have_content('error') }
+		end
+
+		describe "with valid information" do
+			let(:good_name) { "Project B" }
+			before do 
+				fill_in "Name", with: good_name
+				click_button "Save changes"
+			end
+
+			it { should have_content('Folder updated') }
+			specify { folder.reload.name.should == good_name }
+		end
+	end
 end

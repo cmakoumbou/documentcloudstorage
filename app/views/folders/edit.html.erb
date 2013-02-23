@@ -1,0 +1,8 @@
+<% provide(:title, "Edit folder") %> 
+<h1>Update your folder</h1>
+<%= form_for(@folder) do |f| %>
+
+	<%= render 'fields', f: f %>
+
+	<%= f.submit "Save changes" %>
+<% end %>
