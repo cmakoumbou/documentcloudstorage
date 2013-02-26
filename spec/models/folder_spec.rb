@@ -16,6 +16,11 @@ describe Folder do
 
   let(:user) { FactoryGirl.create(:user) }
   before { @folder = user.folders.build(name: "Project A") }
+  before do
+    @alpha = File.new(File.join(Rails.root, 'spec', 'support', 'doctor.txt'))
+    @beta = File.new(File.join(Rails.root, 'spec', 'support', 'hello.txt'))
+    @delta = File.new(File.join(Rails.root, 'spec', 'support', 'moon.txt'))
+  end
  
   subject { @folder }
 
@@ -48,5 +53,27 @@ describe Folder do
   			Folder.new(user_id: user.id)
   		end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
   	end
+  end
+
+  describe "document associations" do
+    before { @folder.save }
+    let!(:alpha_document) do
+      FactoryGirl.create(:document, uploaded_file: @alpha, folder: @folder)
+    end
+    let!(:delta_document) do
+      FactoryGirl.create(:document, uploaded_file: @delta, folder: @folder)
+    end
+    let!(:beta_document) do
+      FactoryGirl.create(:document, uploaded_file: @beta, folder: @folder)
+    end
+
+    it "should destroy associated documents" do
+      documents = @folder.documents.dup
+      @folder.destroy
+      documents.should_not be_empty
+      documents.each do |document|
+        Document.find_by_id(document.id).should be_nil
+      end
+    end
   end
 end
