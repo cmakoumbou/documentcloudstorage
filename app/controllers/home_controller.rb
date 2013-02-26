@@ -6,4 +6,7 @@ class HomeController < ApplicationController
 			@documents = current_user.documents
 		end
 	end
+
+	def browse
+	end
 end

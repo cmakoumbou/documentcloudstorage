@@ -10,11 +10,13 @@
 #  uploaded_file_content_type :string(255)
 #  uploaded_file_file_size    :integer
 #  uploaded_file_updated_at   :datetime
+#  folder_id                  :integer
 #
 
 class Document < ActiveRecord::Base
   attr_accessible :uploaded_file
   belongs_to :user
+  belongs_to :folder
 
   has_attached_file :uploaded_file
 

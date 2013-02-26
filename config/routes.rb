@@ -17,6 +17,8 @@ Tms::Application.routes.draw do
 
   match 'documents/get/:id', to: 'documents#get', :as => 'download'
 
+  match 'browse/:folder_id', to: 'home#browse', :as => 'browse'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
