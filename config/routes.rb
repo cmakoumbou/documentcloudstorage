@@ -1,6 +1,6 @@
 Tms::Application.routes.draw do
 
-  root to: 'home#index'
+  root to: 'documents#index'
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
@@ -13,7 +13,7 @@ Tms::Application.routes.draw do
 
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
-  match '/contact', to: 'static_pages#contact' 
+  match '/contact', to: 'static_pages#contact'
 
   match 'documents/get/:id', to: 'documents#get', :as => 'download'
 

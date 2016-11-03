@@ -1,9 +1,7 @@
-<% provide(:title, "Edit user") %> 
-<h1>Update your profile</h1>
+<% provide(:title, "Edit user") %>
+<h1>Change your details</h1>
 
 <%= form_for(@user) do |f| %>
     <%= render 'fields', f: f %>
-    <%= f.submit "Save changes" %>
+    <%= f.submit "Save changes", class: "btn btn-default" %>
 <% end %>
-
- 

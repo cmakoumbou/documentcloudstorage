@@ -1,16 +1,4 @@
-<h1>Sample App</h1>
 <% if signed_in? %>
-	<% for folder in @folders %>
-		<li>
-			<%= folder.name %>
-			<% if current_user?(folder.user) %>
-				|	<%= link_to "delete", folder, method: :delete,
-										  data: { confirm: "You sure?"},
-										  title: folder.name %>
-		    	|   <%= link_to "edit", edit_folder_path(folder) %>
-			<% end %>
-		</li>
-	<% end %>
 	<% for document in @documents %>
 		<li>
 			<%= link_to document.file_name, document %>
@@ -23,6 +11,25 @@
 		</li>
 	<% end %>
 <% else %>
-	<p>This is the home page.</p>
-	<%= link_to "Sign up now!", signup_path %>
+	<div class="jumbotron centered">
+		<h1>Document Cloud Storage</h1>
+		<p>Upload and store your documents in the cloud for free!</p>
+		<%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-success" %>
+	</div>
+	<div class="container">
+	  <div class="row">
+	    <div class="col-md-4">
+	      <h2>Upload</h2>
+	      <p>You can upload any type of document (10mb limit).</p>
+	    </div>
+	    <div class="col-md-4">
+	      <h2>Store</h2>
+	      <p>You can store an unlimited amount of documents.</p>
+	   </div>
+	    <div class="col-md-4">
+	      <h2>Access</h2>
+	      <p>You can access your documents on any device.</p>
+	    </div>
+	  </div>
+  </div>
 <% end %>

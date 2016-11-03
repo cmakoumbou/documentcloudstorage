@@ -1,13 +1,38 @@
-<% provide(:title, 'All documents') %>
-<h1>All documents</h1>
-<% for document in @documents %>
-	<li>
-		<%= link_to document.file_name, document %>
-		<% if current_user?(document.user) %>
-			|	<%= link_to "delete", document, method: :delete,
-												data: { confirm: "You sure?"},
-												title: document.file_name %>
-			|	<%= link_to "download", download_path(document) %>
-		<% end %>
-	</li>
+<% if signed_in? %>
+	<h1>Documents</h1>
+	<% for document in @documents %>
+		<li>
+			<%= document.file_name %>
+			<% if current_user?(document.user) %>
+				|	<%= link_to "delete", document, method: :delete,
+													data: { confirm: "You sure?"},
+													title: document.file_name %>
+				|	<%= link_to "download", download_path(document) %>
+			<% end %>
+		</li>
+	<% end %>
+	<hr>
+	<%= link_to "Upload a document", new_document_path %>
+<% else %>
+	<div class="jumbotron centered">
+		<h1>Document Cloud Storage</h1>
+		<p>Upload and store your documents in the cloud for free!</p>
+		<%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-success" %>
+	</div>
+	<div class="container">
+	  <div class="row">
+	    <div class="col-md-4">
+	      <h2>Upload</h2>
+	      <p>You can upload any type of document (10mb limit).</p>
+	    </div>
+	    <div class="col-md-4">
+	      <h2>Store</h2>
+	      <p>You can store an unlimited amount of documents.</p>
+	   </div>
+	    <div class="col-md-4">
+	      <h2>Access</h2>
+	      <p>You can access your documents on any device.</p>
+	    </div>
+	  </div>
+  </div>
 <% end %>

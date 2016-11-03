@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-  before_filter :signed_in_user, only: [:new, :create, :show, :index, :destroy, :get]
+  before_filter :signed_in_user, only: [:new, :create, :show, :destroy, :get]
   before_filter :correct_user, only: [:show, :destroy, :get]
 
   def new
@@ -9,8 +9,8 @@ class DocumentsController < ApplicationController
   def create
   	@document = current_user.documents.build(params[:document])
   	if @document.save
-      flash[:sucess] = "Document uploaded"
-  		redirect_to @document
+      flash[:success] = "Document uploaded"
+  		redirect_to root_path
   	else
   		render 'new'
   	end
@@ -21,7 +21,9 @@ class DocumentsController < ApplicationController
   end
 
   def index
-    @documents = current_user.documents
+    if signed_in?
+      @documents = current_user.documents
+    end
   end
 
   def destroy
