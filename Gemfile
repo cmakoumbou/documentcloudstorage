@@ -1,13 +1,14 @@
 source 'https://rubygems.org'
 
 #ruby-gemset=tms
+ruby "1.9.3"
 
 gem 'rails', '3.2.12'
 gem 'pg', '0.12.2'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'paperclip', '3.4.0'
-gem 'json', '1.7.7'
+gem 'json', '1.8.3'
 gem 'ancestry', '1.3.0'
 gem 'bootstrap-sass', '3.0.0'
 
